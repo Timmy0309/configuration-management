@@ -20,5 +20,19 @@ echo "$border"
 скриншот:
 ![Screenshot 2024-09-09 163331](https://github.com/user-attachments/assets/df98ec16-0516-45c2-8155-5a4e1c7de6c7)
 
+Задание 4: 
+код:
+grep -o '\b[a-zA-Z_][a-zA-Z0-9_]*\b' main.cpp | sort | uniq
+скриншот:
 
 
+
+Задание 7: 
+код:
+find "$1" -type f -exec md5sum {} + | sort | uniq -w32 -dD
+скриншот:
+
+
+Задание 8: 
+код:
+find . -name "*.$1" -print0 | tar -czvf archive.tar.gz --null -T -
