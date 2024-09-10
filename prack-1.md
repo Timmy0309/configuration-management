@@ -53,7 +53,7 @@ done
 
 Задание 7: 
 код:
-find "$1" -type f -exec md5sum {} + | sort | uniq -w32 -dD
+find "konf" -type f -exec md5sum {} + | sort | uniq -w32 -dD
 скриншот:
 ![Screenshot 2024-09-10 230502](https://github.com/user-attachments/assets/c9fce292-a1c5-43fc-a36b-2fa9f61b74ae)
 
@@ -73,6 +73,6 @@ sed 's/    /\t/g' "test.txt" > "test1.txt"
 
 Задание 10: 
 код:
-find "$1" -type f -empty -name "*.txt"
+find "konf" -type f -empty -name "*.txt"
 скриншот:
 ![Screenshot 2024-09-10 231651](https://github.com/user-attachments/assets/b412699f-6573-48ba-8087-983a2cd018a9)
