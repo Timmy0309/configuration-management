@@ -26,6 +26,13 @@ grep -o '\b[a-zA-Z_][a-zA-Z0-9_]*\b' main.cpp | sort | uniq
 скриншот:
 ![Screenshot 2024-09-10 223529](https://github.com/user-attachments/assets/18460c74-359e-4598-a87a-1bdda1589ff7)
 
+Задание 5: 
+код:
+chmod +x "file.c"
+sudo cp "file.c" /usr/local/bin/
+скриншот:
+![Screenshot 2024-09-10 235502](https://github.com/user-attachments/assets/d26a5b14-c8bc-48d7-962d-b2c83a6278c7)
+
 Задание 6: 
 код:
 for file in "file.c"; do
