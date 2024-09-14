@@ -18,7 +18,8 @@ echo "$border"
 echo "| $msg |"
 echo "$border"
 скриншот:
-![Screenshot 2024-09-09 163331](https://github.com/user-attachments/assets/df98ec16-0516-45c2-8155-5a4e1c7de6c7)
+![Uploading Screenshot 2024-09-14 200934.png…]()
+
 
 Задание 4: 
 код:
