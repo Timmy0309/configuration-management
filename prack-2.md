@@ -33,3 +33,27 @@ fim matplotlib.png
 ![Screenshot 2024-09-21 222516](https://github.com/user-attachments/assets/9e2da581-8a5e-4599-b49f-f8e14b26f028)
 ![Screenshot 2024-09-21 222611](https://github.com/user-attachments/assets/e80ee1e7-a9c6-4d33-a9b3-4fe96f751574)
 
+
+Задание 4:
+Решить на MiniZinc задачу о счастливых билетах. Добавить ограничение на то, что все цифры билета должны быть различными (подсказка: используйте all_different). Найти минимальное решение для суммы 3 цифр.
+код:
+include "globals.mzn"; 
+array[1..6] of var 0..9: digits;
+constraint all_different(digits);
+var int: sum1 = digits[1] + digits[2] + digits[3];
+var int: sum2 = digits[4] + digits[5] + digits[6];
+constraint sum1 = sum2;
+constraint sum1 >= 0; 
+solve satisfy;
+output ["Digits: \(digits)\nSum: \(sum1)"];
+скриншот:
+![Screenshot 2024-09-21 224927](https://github.com/user-attachments/assets/62ed1d7b-8549-421f-9ba6-f88d4a7a0f95)
+![Screenshot 2024-09-21 224937](https://github.com/user-attachments/assets/3e0c0a05-3070-4ae2-a98a-36c55fce7fc4)
+
+Задание 5:
+Решить на MiniZinc задачу о зависимостях пакетов для рисунка, приведенного ниже.
+![image](https://github.com/user-attachments/assets/b4a5a73b-1be7-44c7-ba30-c3e33e07b36b)
+код:
+
+Скриншот:
+
