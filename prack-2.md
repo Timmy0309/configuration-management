@@ -43,17 +43,79 @@ constraint all_different(digits);
 var int: sum1 = digits[1] + digits[2] + digits[3];
 var int: sum2 = digits[4] + digits[5] + digits[6];
 constraint sum1 = sum2;
-constraint sum1 >= 0; 
-solve satisfy;
+solve minimize sum1;
 output ["Digits: \(digits)\nSum: \(sum1)"];
 ## скриншот:
-![Screenshot 2024-09-21 224927](https://github.com/user-attachments/assets/62ed1d7b-8549-421f-9ba6-f88d4a7a0f95)
-![Screenshot 2024-09-21 224937](https://github.com/user-attachments/assets/3e0c0a05-3070-4ae2-a98a-36c55fce7fc4)
+![Screenshot 2024-09-23 165541](https://github.com/user-attachments/assets/86225fdc-641b-428f-b0df-e6ea04d42bc2)
 
 # Задание 5:
 Решить на MiniZinc задачу о зависимостях пакетов для рисунка, приведенного ниже.
 ![image](https://github.com/user-attachments/assets/b4a5a73b-1be7-44c7-ba30-c3e33e07b36b)
 ## код:
-
+enum PACKAGES = {
+      root, 
+      menu_1_0_0, menu_1_1_0, menu_1_2_0, menu_1_3_0, menu_1_4_0, menu_1_5_0, 
+      dropdown_2_0_0, dropdown_2_1_0, dropdown_2_2_0, dropdown_2_3_0, dropdown_1_8_0,
+      icons_1_0_0, icons_2_0_0
+};
+  
+array[PACKAGES] of var 0..1: installed; 
+constraint installed[root] == 1;
+constraint
+      (installed[root] == 1) -> (installed[menu_1_0_0] == 1 /\ installed[menu_1_5_0] == 1 /\ installed[icons_1_0_0] == 1) /\
+      (installed[menu_1_5_0] == 1) -> (installed[dropdown_2_3_0] == 1 /\ installed[dropdown_2_0_0] == 1) /\
+      (installed[menu_1_4_0] == 1) -> (installed[dropdown_2_3_0] == 1 /\ installed[dropdown_2_0_0] == 1) /\
+      (installed[menu_1_3_0] == 1) -> (installed[dropdown_2_3_0] == 1 /\ installed[dropdown_2_0_0] == 1) /\
+      (installed[menu_1_2_0] == 1) -> (installed[dropdown_2_3_0] == 1 /\ installed[dropdown_2_0_0] == 1) /\
+      (installed[menu_1_1_0] == 1) -> (installed[dropdown_2_3_0] == 1 /\ installed[dropdown_2_0_0] == 1) /\
+      (installed[menu_1_0_0] == 1) -> (installed[dropdown_1_8_0] == 1) /\
+      (installed[dropdown_2_0_0] == 1) -> (installed[icons_2_0_0] == 1) /\
+      (installed[dropdown_2_1_0] == 1) -> (installed[icons_2_0_0] == 1) /\
+      (installed[dropdown_2_2_0] == 1) -> (installed[icons_2_0_0] == 1) /\
+      (installed[dropdown_2_3_0] == 1) -> (installed[icons_2_0_0] == 1);
+  
+solve minimize sum(installed);
+output ["Installed packages: ", show(installed)];
 ## Скриншот:
+![Screenshot 2024-09-23 170117](https://github.com/user-attachments/assets/b9d727f6-50fe-4b34-ae3e-3193c6e43e81)
 
+# Задание 6
+Решить на MiniZinc задачу о зависимостях пакетов для следующих данных:
+
+root 1.0.0 зависит от foo ^1.0.0 и target ^2.0.0.
+foo 1.1.0 зависит от left ^1.0.0 и right ^1.0.0.
+foo 1.0.0 не имеет зависимостей.
+left 1.0.0 зависит от shared >=1.0.0.
+right 1.0.0 зависит от shared <2.0.0.
+shared 2.0.0 не имеет зависимостей.
+shared 1.0.0 зависит от target ^1.0.0.
+target 2.0.0 и 1.0.0 не имеют зависимостей.
+## код
+enum PACKAGES = {root, foo_1_0_0, foo_1_1_0, left, right, shared_1_0_0, shared_2_0_0, target_1_0_0, target_2_0_0};
+
+array[PACKAGES] of var 0..1: includ;
+
+constraint includ[root] == 1;
+constraint includ[root] <= includ[foo_1_1_0] + includ[foo_1_0_0];
+constraint includ[root] <= includ[target_2_0_0];
+
+constraint includ[foo_1_1_0] <= includ[left] + includ[right];
+
+constraint includ[left] <= includ[shared_1_0_0] + includ[shared_2_0_0];
+
+constraint includ[right] <= includ[shared_1_0_0];
+
+constraint includ[shared_1_0_0] <= includ[target_1_0_0];
+
+solve minimize sum(includ);
+
+output [
+    "Included packages: \(includ)\n",
+];
+## скриншот
+![Screenshot 2024-09-23 172524](https://github.com/user-attachments/assets/1cc85e5d-2c47-49cd-ad2e-ef69bfa4c57c)
+
+# Задание 7
+Представить задачу о зависимостях пакетов в общей форме. Здесь необходимо действовать аналогично реальному менеджеру пакетов. То есть получить описание пакета, а также его зависимости в виде структуры данных. Например, в виде словаря. В предыдущих задачах зависимости были явно заданы в системе ограничений. Теперь же систему ограничений надо построить автоматически, по метаданным.
+## код
+## скриншот
