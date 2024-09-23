@@ -1,18 +1,18 @@
-Задание 1:
+#Задание 1:
 Вывести служебную информацию о пакете matplotlib (Python). Разобрать основные элементы содержимого файла со служебной информацией из пакета. Как получить пакет без менеджера пакетов, прямо из репозитория?
-код: pip show matplotlib
+##код: pip show matplotlib
 
-скриншот:
+##скриншот:
 ![Screenshot 2024-09-16 173635](https://github.com/user-attachments/assets/7b4ea9ee-89a1-4391-a019-b0abf06b4acc)
-код для получения пакета прямо из репозитория: git clone https://github.com/matplotlib/matplotlib.git
-скриншот:
+##код для получения пакета прямо из репозитория: git clone https://github.com/matplotlib/matplotlib.git
+##скриншот:
 ![Screenshot 2024-09-21 222009](https://github.com/user-attachments/assets/f6e09dbb-59ab-481f-b593-5a095f42ec0c)
 
 
-Задание 2: 
+#Задание 2: 
 Вывести служебную информацию о пакете express (JavaScript). Разобрать основные элементы содержимого файла со служебной информацией из пакета. Как получить пакет без менеджера пакетов, прямо из репозитория?
-код: npm view express
-скриншот:
+##код: npm view express
+##скриншот:
 ![Screenshot 2024-09-21 125704](https://github.com/user-attachments/assets/dd1391a6-7156-4cd7-995a-cdab4af2b99e)
 код для получения пакета прямо из репозитория: git clone https://github.com/expressjs/express.git
 скриншот:
