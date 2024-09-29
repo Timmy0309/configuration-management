@@ -73,7 +73,8 @@ constraint
       (installed[dropdown_2_1_0] == 1) -> (installed[icons_2_0_0] == 1) /\
       (installed[dropdown_2_2_0] == 1) -> (installed[icons_2_0_0] == 1) /\
       (installed[dropdown_2_3_0] == 1) -> (installed[icons_2_0_0] == 1);
-  
+
+constraint sum(installed[menu_1_0_0..menu_1_5_0]) == 1 /\ sum(installed[dropdown_2_0_0..dropdown_1_8_0]) == 1 /\ sum(installed[icons_1_0_0..icons_2_0_0]) == 1;
 solve minimize sum(installed);
 output ["Installed packages: ", show(installed)];
 ## Скриншот:
