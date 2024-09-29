@@ -1,11 +1,8 @@
 import os
 import tarfile
 import json
-import argparse
-import shlex
 import datetime
 import tkinter as tk
-from tkinter import simpledialog, messagebox
 from tkinter import scrolledtext
 import xml.etree.ElementTree as ET
 
@@ -267,15 +264,20 @@ class ShellEmulator:
             new_name = new_path
             with tarfile.open(self.vfs_path, 'r') as tar:
                 members = tar.getmembers()
+                flag = 0
                 for member in members:
                     if member.name.split('/')[-1] == file:
                         member.name = member.name[:member.name.rfind('/')] + "/" + new_name
-
+                            flag = 1
                 with tarfile.open(self.vfs_path, "w") as new_tar:
                     for member in members:
                         new_tar.addfile(member, tar.extractfile(member))
-            self.info.insert(tk.END, f'Файл {file} переименован в {new_name}')
-            return f'Файл {file} переименован в {new_name}'
+            if flag == 1:
+                self.info.insert(tk.END, f'Файл {file} переименован в {new_name}')
+                return f'Файл {file} переименован в {new_name}'
+            else:
+                self.info.insert(tk.END, "Файл не может быть переименован")
+                return "Файл не может быть переименован"
         else:
             if new_path[0] == "/":
                 new_path = new_path[1:]
@@ -283,20 +285,28 @@ class ShellEmulator:
                 new_path = self.iamlocate + new_path[1:]
             with tarfile.open(self.vfs_path, 'r') as tar:
                 members = tar.getmembers()
+                flag = 0
                 for member in members:
                     if member.name.split('/')[-1] == file:
                         old_path = member.name
-                with tarfile.open('new_arxive.tar', 'w') as new_tar:
-                    for member in members:
-                        if member.name != old_path:
-                            new_tar.addfile(member, tar.extractfile(member))
-                    move = tar.getmember(old_path)
-                    move.name = new_path
-                    new_tar.addfile(move, tar.extractfile(move))
-            os.remove('disk.tar')
-            os.rename('new_arxive.tar', 'disk.tar')
-            self.info.insert(tk.END, f"Файл {file} перемещён в {new_path}")
-            return f"Файл {file} перемещён в {new_path}"
+                        flag = 1
+                if flag == 1:
+                    with tarfile.open('new_arxive.tar', 'w') as new_tar:
+                        for member in members:
+                            if member.name != old_path:
+                                new_tar.addfile(member, tar.extractfile(member))
+                        move = tar.getmember(old_path)
+                        move.name = new_path
+                        new_tar.addfile(move, tar.extractfile(move))
+            if flag == 1:
+                os.remove('disk.tar')
+                os.rename('new_arxive.tar', 'disk.tar')
+                self.info.insert(tk.END, f"Файл {file} перемещён в {new_path}")
+                return f"Файл {file} перемещён в {new_path}"
+            else:
+                self.info.insert(tk.END, f'Файл {file} не может быть перемещён в {new_path}')
+                return f'Файл {file} не может быть перемещён в {new_path}'
+
 
     def run(self):
         self.root.mainloop()
