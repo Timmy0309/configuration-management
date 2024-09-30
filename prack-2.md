@@ -52,33 +52,52 @@ output ["Digits: \(digits)\nSum: \(sum1)"];
 Решить на MiniZinc задачу о зависимостях пакетов для рисунка, приведенного ниже.
 ![image](https://github.com/user-attachments/assets/b4a5a73b-1be7-44c7-ba30-c3e33e07b36b)
 ## код:
-enum PACKAGES = {
-      root, 
-      menu_1_0_0, menu_1_1_0, menu_1_2_0, menu_1_3_0, menu_1_4_0, menu_1_5_0, 
-      dropdown_2_0_0, dropdown_2_1_0, dropdown_2_2_0, dropdown_2_3_0, dropdown_1_8_0,
-      icons_1_0_0, icons_2_0_0
-};
-  
-array[PACKAGES] of var 0..1: installed; 
-constraint installed[root] == 1;
-constraint
-      (installed[root] == 1) -> (installed[menu_1_0_0] == 1 /\ installed[menu_1_5_0] == 1 /\ installed[icons_1_0_0] == 1) /\
-      (installed[menu_1_5_0] == 1) -> (installed[dropdown_2_3_0] == 1 /\ installed[dropdown_2_0_0] == 1) /\
-      (installed[menu_1_4_0] == 1) -> (installed[dropdown_2_3_0] == 1 /\ installed[dropdown_2_0_0] == 1) /\
-      (installed[menu_1_3_0] == 1) -> (installed[dropdown_2_3_0] == 1 /\ installed[dropdown_2_0_0] == 1) /\
-      (installed[menu_1_2_0] == 1) -> (installed[dropdown_2_3_0] == 1 /\ installed[dropdown_2_0_0] == 1) /\
-      (installed[menu_1_1_0] == 1) -> (installed[dropdown_2_3_0] == 1 /\ installed[dropdown_2_0_0] == 1) /\
-      (installed[menu_1_0_0] == 1) -> (installed[dropdown_1_8_0] == 1) /\
-      (installed[dropdown_2_0_0] == 1) -> (installed[icons_2_0_0] == 1) /\
-      (installed[dropdown_2_1_0] == 1) -> (installed[icons_2_0_0] == 1) /\
-      (installed[dropdown_2_2_0] == 1) -> (installed[icons_2_0_0] == 1) /\
-      (installed[dropdown_2_3_0] == 1) -> (installed[icons_2_0_0] == 1);
+enum PACKAGES = { root, menu_1_0_0, menu_1_1_0, menu_1_2_0, menu_1_3_0, menu_1_4_0, menu_1_5_0, dropdown_1_8_0, dropdown_2_0_0, dropdown_2_1_0, dropdown_2_2_0, dropdown_2_3_0, icons_1_0_0, icons_2_0_0 };
 
-constraint sum(installed[menu_1_0_0..menu_1_5_0]) == 1 /\ sum(installed[dropdown_2_0_0..dropdown_1_8_0]) == 1 /\ sum(installed[icons_1_0_0..icons_2_0_0]) == 1;
-solve minimize sum(installed);
+array[PACKAGES] of var 0..1: installed;
+constraint installed[root] == 1;
+
+constraint ((installed[root] == 1 -> installed[menu_1_0_0] == 1) \/ 
+    (installed[root] == 1 -> installed[menu_1_1_0] == 1) \/
+    (installed[root] == 1 -> installed[menu_1_2_0] == 1) \/
+    (installed[root] == 1 -> installed[menu_1_3_0] == 1) \/
+    (installed[root] == 1 -> installed[menu_1_4_0] == 1) \/
+    (installed[root] == 1 -> installed[menu_1_5_0] == 1));
+    
+constraint (installed[root] == 1 -> installed[icons_1_0_0] == 1);
+
+constraint (installed[menu_1_1_0] == 1 -> installed[dropdown_2_3_0] == 1) \/ 
+    (installed[menu_1_1_0] == 1 -> installed[dropdown_2_2_0] == 1) \/ 
+    (installed[menu_1_1_0] == 1 -> installed[dropdown_2_1_0] == 1) \/  
+    (installed[menu_1_1_0] == 1 -> installed[dropdown_2_0_0] == 1);
+constraint (installed[menu_1_2_0] == 1 -> installed[dropdown_2_3_0] == 1) \/ 
+    (installed[menu_1_2_0] == 1 -> installed[dropdown_2_2_0] == 1) \/ 
+    (installed[menu_1_2_0] == 1 -> installed[dropdown_2_1_0] == 1) \/  
+    (installed[menu_1_2_0] == 1 -> installed[dropdown_2_0_0] == 1);
+constraint (installed[menu_1_3_0] == 1 -> installed[dropdown_2_3_0] == 1) \/ 
+    (installed[menu_1_3_0] == 1 -> installed[dropdown_2_2_0] == 1) \/ 
+    (installed[menu_1_3_0] == 1 -> installed[dropdown_2_1_0] == 1) \/  
+    (installed[menu_1_3_0] == 1 -> installed[dropdown_2_0_0] == 1);
+constraint (installed[menu_1_4_0] == 1 -> installed[dropdown_2_3_0] == 1) \/ 
+    (installed[menu_1_4_0] == 1 -> installed[dropdown_2_2_0] == 1) \/ 
+    (installed[menu_1_4_0] == 1 -> installed[dropdown_2_1_0] == 1) \/  
+    (installed[menu_1_4_0] == 1 -> installed[dropdown_2_0_0] == 1);
+constraint (installed[menu_1_5_0] == 1 -> installed[dropdown_2_3_0] == 1) \/ 
+    (installed[menu_1_5_0] == 1 -> installed[dropdown_2_2_0] == 1) \/ 
+    (installed[menu_1_5_0] == 1 -> installed[dropdown_2_1_0] == 1) \/  
+    (installed[menu_1_5_0] == 1 -> installed[dropdown_2_0_0] == 1);
+    
+constraint (installed[menu_1_0_0] == 1) -> (installed[dropdown_1_8_0] == 1);
+constraint ((installed[dropdown_2_0_0] == 1) -> (installed[icons_2_0_0] == 1));
+constraint ((installed[dropdown_2_1_0] == 1) -> (installed[icons_2_0_0] == 1));
+constraint ((installed[dropdown_2_2_0] == 1) -> (installed[icons_2_0_0] == 1));
+constraint ((installed[dropdown_2_3_0] == 1) -> (installed[icons_2_0_0] == 1));
+
+solve minimize(sum(installed));
 output ["Installed packages: ", show(installed)];
+
 ## Скриншот:
-![Screenshot 2024-09-23 170117](https://github.com/user-attachments/assets/b9d727f6-50fe-4b34-ae3e-3193c6e43e81)
+![Screenshot 2024-09-30 162843](https://github.com/user-attachments/assets/ae60b88a-652f-4c0d-9b20-5f9c47c2247a)
 
 # Задание 6
 Решить на MiniZinc задачу о зависимостях пакетов для следующих данных:
