@@ -137,5 +137,95 @@ output [
 
 # Задание 7
 Представить задачу о зависимостях пакетов в общей форме. Здесь необходимо действовать аналогично реальному менеджеру пакетов. То есть получить описание пакета, а также его зависимости в виде структуры данных. Например, в виде словаря. В предыдущих задачах зависимости были явно заданы в системе ограничений. Теперь же систему ограничений надо построить автоматически, по метаданным.
-## код
+## код на языке питон
+'''
+packages = {
+    "root": {"dependencies": ["^foo_1_0_0", "<=target_2_0_0"]},
+    "foo_1_1_0": {"dependencies": ["^left_1_0_0", "^right_1_0_0"]},
+    "left_1_0_0": {"dependencies": [">=shared_1_0_0"]},
+    "right_1_0_0": {"dependencies": ["<shared_2_0_0"]},
+    "shared_1_0_0": {"dependencies": ["^target_1_0_0"]},
+    "shared_2_0_0": {"dependencies": []},
+    "target_1_0_0": {"dependencies": []},
+    "target_2_0_0": {"dependencies": []}
+}
+cnt_pack = {}
+keys_list = list(packages.keys())
+for key in keys_list:
+    cnt_pack[key.split('_')[0]] = 'constraint ('
+    
+def satisfy_condition(condition):
+    result = ""
+    if condition.startswith('^'):
+        base_version = condition[1:].split('_')
+        for key in keys_list:
+            check_vers = key.split('_')
+            if key.startswith(base_version[0]) and check_vers[1] == base_version[1] and check_vers[1] >= base_version[2]:
+                result += f"installed[{key}] == 1 \/ "
+        result = result[:-4]
+    elif condition.startswith('>='):
+        base_version = condition[2:].split('_')
+        for key in keys_list:
+            check_vers = key.split('_')
+            if key.startswith(base_version[0]) and (check_vers[1] > base_version[1] or (check_vers[1] == base_version[1] and check_vers[2] >= base_version[2])):
+                result += f"installed[{key}] == 1 \/ "
+        result = result[:-4]
+    elif condition.startswith('<='):
+        base_version = condition[2:].split('_')
+        for key in keys_list:
+            check_vers = key.split('_')
+            if key.startswith(base_version[0]) and (check_vers[1] < base_version[1] or (check_vers[1] == base_version[1] and check_vers[2] <= base_version[2])):
+                result += f"installed[{key}] == 1 \/ "
+        result = result[:-4]
+    elif condition.startswith('<'):
+        base_version = condition[1:].split('_')
+        for key in keys_list:
+            check_vers = key.split('_')
+            if key.startswith(base_version[0]) and (check_vers[1] < base_version[1] or (check_vers[1] == base_version[1] and
+                                                                                         check_vers[2] < base_version[2])):
+                result += f"installed[{key}] == 1 \/ "
+        result = result[:-4]
+    elif condition.startswith('>'):
+        base_version = condition[1:].split('_')
+        for key in keys_list:
+            check_vers = key.split('_')
+            if key.startswith(base_version[0]) and (check_vers[1] > base_version[1] or (check_vers[1] == base_version[1] and
+                                                                                         check_vers[2] > base_version[2])):
+                result += f"installed[{key}] == 1 \/ "
+        result = result[:-4]
+    return "(" + result + ")"
+
+def generate_minizinc_code(packages):
+    package_names = ', '.join(keys_list)
+    minizinc_code = f"enum PACKAGES = {{{package_names}}};\n"
+    minizinc_code += "array[PACKAGES] of var 0..1: installed;\n\n"
+    minizinc_code += "constraint installed[root] == 1;\n"
+    for package, details in packages.items():
+        dependencies = details["dependencies"]
+        if dependencies:
+            dep_constraints = []
+            for dep in dependencies:
+                if dep.startswith(('^', '>=', '<=', '>', '<')):
+                    constraint = satisfy_condition(dep)
+                    if constraint:
+                        dep_constraints.append(constraint)
+                else:
+                    dep_constraints.append(f"installed[{dep}] == 1")
+            constraint = "constraint installed[{}] == 1 -> ({});\n".format(
+                package, ' /\\ '.join(dep_constraints)
+            )
+            minizinc_code += constraint
+    minizinc_code += "\n"
+    for i in keys_list:
+        cnt_pack[i.split('_')[0]] += f"installed[{i}] + "
+    for i in list(cnt_pack.keys()):
+        minizinc_code += cnt_pack[i][:-3] + ") <= 1;\n"
+        
+    minizinc_code += "\nsolve minimize sum(installed);\n"
+    return minizinc_code
+
+minizinc_code = generate_minizinc_code(packages)
+print(minizinc_code)
+'''
 ## скриншот
+
