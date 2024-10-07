@@ -97,7 +97,8 @@ solve minimize(sum(installed));
 output ["Installed packages: ", show(installed)];
 
 ## Скриншот:
-![Screenshot 2024-09-30 162843](https://github.com/user-attachments/assets/ae60b88a-652f-4c0d-9b20-5f9c47c2247a)
+![Screenshot 2024-10-07 173832](https://github.com/user-attachments/assets/4b90d75c-b875-4cf7-ab1b-4377cdfc9281)
+
 
 # Задание 6
 Решить на MiniZinc задачу о зависимостях пакетов для следующих данных:
@@ -129,11 +130,9 @@ constraint includ[shared_1_0_0] <= includ[target_1_0_0];
 
 solve minimize sum(includ);
 
-output [
-    "Included packages: \(includ)\n",
-];
 ## скриншот
-![Screenshot 2024-09-23 172524](https://github.com/user-attachments/assets/1cc85e5d-2c47-49cd-ad2e-ef69bfa4c57c)
+![Screenshot 2024-10-07 173532](https://github.com/user-attachments/assets/a2dedb0e-f2a5-4472-b476-2d2900a33ea2)
+
 
 # Задание 7
 Представить задачу о зависимостях пакетов в общей форме. Здесь необходимо действовать аналогично реальному менеджеру пакетов. То есть получить описание пакета, а также его зависимости в виде структуры данных. Например, в виде словаря. В предыдущих задачах зависимости были явно заданы в системе ограничений. Теперь же систему ограничений надо построить автоматически, по метаданным.
