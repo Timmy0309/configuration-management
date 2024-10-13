@@ -71,9 +71,9 @@ let students : List Student =
 in  { groups = groups, students = students, subject = "Конфигурационное управление" }
 ```
 ## скриншот
-![Screenshot 2024-10-13 202239](https://github.com/user-attachments/assets/bd23c797-70ca-4317-8307-29d256ae60b1)
 ![Screenshot 2024-10-13 202227](https://github.com/user-attachments/assets/3209e1f2-3649-469c-b3be-ba80e04b207f)
 ![Screenshot 2024-10-13 202206](https://github.com/user-attachments/assets/2ff1c692-1fc9-405a-8c80-05766327753b)
+![Screenshot 2024-10-13 202239](https://github.com/user-attachments/assets/bd23c797-70ca-4317-8307-29d256ae60b1)
 
 Для решения дальнейших задач потребуется программа на Питоне, представленная ниже. Разбираться в самом языке Питон при этом необязательно.
 ```python
