@@ -154,8 +154,9 @@ y & ~(y)
 ```
 ## код 
 BNF = '''
-
+E = E & E | E OR E | ~ E | ( E ) | x | y 
 '''
 ## скриншот
+![Screenshot 2024-10-14 170706](https://github.com/user-attachments/assets/a252f5d9-57ad-4e0a-98a1-40440df8c210)
 
 
