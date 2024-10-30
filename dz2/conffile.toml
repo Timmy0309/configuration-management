@@ -1,0 +1,4 @@
+path_plantUML = "C:/Users/ltimo/Downloads/plantuml-jar-gplv2-1.2023.7/plantuml.jar"
+package_name = "libical"
+output_file = "dependency_graph.png"
+url_repos = "https://dl-cdn.alpinelinux.org/alpine/v3.17/main/armhf/APKINDEX.tar.gz"
