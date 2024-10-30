@@ -1,0 +1,10 @@
+{
+    "PEOPLE": {
+        "HEALTH": 100,
+        "ATTACK": 10
+    },
+    "GOBLIN": {
+        "HEALTH": 110,
+        "ATTACK": 12
+    }
+}

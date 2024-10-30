@@ -1,0 +1,6 @@
+|| Настройка конфигурации сервера:
+DEFAULTPORT <- 8080
+{
+PORT : .DEFAULTPORT.,
+CONNECTION : 100
+}

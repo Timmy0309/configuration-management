@@ -1,0 +1,21 @@
+{
+    "constaint": {
+        "CARS": 3,
+        "SPEED": 270
+    }
+}
+{
+    "COUNTCAR": 3,
+    "TOYOTA": {
+        "MAXSPEED": 270,
+        "PASSENGERS": 4
+    },
+    "LADA": {
+        "MAXSPEED": 570,
+        "PASSENGERS": 12
+    },
+    "BUGATTI": {
+        "MAXSPEED": 550,
+        "PASSENGERS": 2
+    }
+}

@@ -1,0 +1,20 @@
+|| Конфигурация характеристик автомобилей:
+
+CARS <- 3
+SPEED <- 270
+
+{
+COUNTCAR : .CARS.,
+TOYOTA : {
+		MAXSPEED : .SPEED.,
+		PASSENGERS : 4
+	},
+LADA : {
+		MAXSPEED : 570, || на 3 скорости
+		PASSENGERS : 12
+	},
+BUGATTI : {
+		MAXSPEED : 550,
+		PASSENGERS : 2
+	}
+}
