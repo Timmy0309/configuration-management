@@ -48,13 +48,15 @@ CONNECTION : 100
 **Выходные данные (JSON):**
 ```json
 {
-    "constaint": {
-        "DEFAULTPORT": 8080
+    {
+        "constaint": {
+            "DEFAULTPORT": 8080
+        }
     }
-}
-{
-    "PORT": 8080,
-    "CONNECTION": 100
+    {
+        "PORT": 8080,
+        "CONNECTION": 100
+    }
 }
 ```
 
@@ -80,13 +82,15 @@ GOBLIN : {
 **Выходные данные (JSON):**
 ```json
 {
-    "PEOPLE": {
-        "HEALTH": 100,
-        "ATTACK": 10
-    },
-    "GOBLIN": {
-        "HEALTH": 110,
-        "ATTACK": 12
+    {
+        "PEOPLE": {
+            "HEALTH": 100,
+            "ATTACK": 10
+        },
+        "GOBLIN": {
+            "HEALTH": 110,
+            "ATTACK": 12
+        }
     }
 }
 ```
@@ -118,24 +122,26 @@ BUGATTI : {
 **Выходные данные (JSON):**
 ```json
 {
-    "constaint": {
-        "CARS": 3,
-        "SPEED": 270
+    {
+        "constaint": {
+            "CARS": 3,
+            "SPEED": 270
+        }
     }
-}
-{
-    "COUNTCAR": 3,
-    "TOYOTA": {
-        "MAXSPEED": 270,
-        "PASSENGERS": 4
-    },
-    "LADA": {
-        "MAXSPEED": 570,
-        "PASSENGERS": 12
-    },
-    "BUGATTI": {
-        "MAXSPEED": 550,
-        "PASSENGERS": 2
+    {
+        "COUNTCAR": 3,
+        "TOYOTA": {
+            "MAXSPEED": 270,
+            "PASSENGERS": 4
+        },
+        "LADA": {
+            "MAXSPEED": 570,
+            "PASSENGERS": 12
+        },
+        "BUGATTI": {
+            "MAXSPEED": 550,
+            "PASSENGERS": 2
+        }
     }
 }
 ```
